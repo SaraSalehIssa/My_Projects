@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Task</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- header section -->
+    <header>
+        <h2>Create/Edit Event</h2>
+        <button class="newButton" type="button">+New</button>
+    </header>
+
+    <!-- navbar section -->
+    <section>
+        <nav>
+          <ul>
+            <li><div class="list"><a href="list.html">List</a></div></li>
+            <li><div class="form"><a href="#">Form</a></div></li>
+          </ul>
+        </nav>
+
+        <div class="container">
+            <div class="form-container">
+                <div class="row">
+                    <div class="col-label">
+                      <label for="name">Name</label>
+                    </div>
+                    <div class="col-edit-text">
+                      <input type="text" id="name" name="areaname" placeholder="Place name..." style="width:180px;">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-label">
+                      <label for="description">Description</label>
+                    </div>
+                    <div class="col-edit-text">
+                        <textarea id="description" name="description" placeholder="Write something..." style="height:150px; width:180px;"></textarea>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-label">
+                      <label for="date">Date</label>
+                    </div>
+                    <div class="col-edit-text">
+                        <input type="date" id="date" name="date" placeholder="Date..." style="width:180px;">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row btns">
+                    <input class="cancel" type="submit" value="Cancel">
+                    <input class="saveadd" type="submit" value="Save/Add">
+                  </div>
+              </div>
+        </div>
+        
+        
+    </section>
+
+</body>
+</html>
