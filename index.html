@@ -44,7 +44,7 @@
               remarkable beauty of an active volcano is priceless!</p>
           </div>
         </div>
-        <div class="place">
+        <div class="place" onclick="editFormFunction()">
           <img src="./img/Grand Cayman.jpg" alt="Grand Cayman image">
           <div class="info">
             <h2>Grand Cayman:</h2>
@@ -55,7 +55,7 @@
               and even kiss.</p>
           </div>
         </div>
-        <div class="place">
+        <div class="place" onclick="editFormFunction()">
           <img src="./img/Costa Rica.jpg" alt="Costa Rica image">
           <div class="info">
             <h2>Costa Rica:</h2>
@@ -66,7 +66,7 @@
               showers, you'll get much better prices for weather that's almost as nice as it is earlier in the year.</p>
           </div>
         </div>
-        <div class="place">
+        <div class="place" onclick="editFormFunction()">
           <img src="./img/New Orleans, Louisiana.jpg" alt="New Orleans, Louisiana image">
           <div class="info">
             <h2>New Orleans, Louisiana:</h2>
@@ -78,7 +78,7 @@
               breezy nights, and plenty of Creole culture.</p>
           </div>
         </div>
-        <div class="place">
+        <div class="place" onclick="editFormFunction()">
           <img src="./img/Istanbul, Turkey.jpg" alt="Istanbul, Turkey image">
           <div class="info">
             <h2>Istanbul, Turkey:</h2>
@@ -89,7 +89,7 @@
               church-turned-mosque, arguably the most recognizable landmark in the city.</p>
           </div>
         </div>
-        <div class="place">
+        <div class="place" onclick="editFormFunction()">
           <img src="./img/Cancun, Mexico.jpg" alt="Cancun, Mexico image">
           <div class="info">
             <h2>Cancun, Mexico:</h2>
@@ -101,7 +101,7 @@
             </p>
           </div>
         </div>
-        <div class="place">
+        <div class="place" onclick="editFormFunction()">
           <img src="./img/The Outer Banks, North Carolina.jpg" alt="The Outer Banks, North Carolina image">
           <div class="info">
             <h2>The Outer Banks:</h2>
@@ -111,7 +111,7 @@
               and it boasts a slew of fantastic things to do.</p>
           </div>
         </div>
-        <div class="place">
+        <div class="place" onclick="editFormFunction()">
           <img src="./img/Lisbon, Portugal.jpg" alt="Lisbon, Portugal image">
           <div class="info">
             <h2>Lisbon, Portugal:</h2>
@@ -238,7 +238,7 @@
       eDaleInput.style = 'width:180px;';
       colEditText.appendChild(eDaleInput);
       
-      // Fifth element in Form (img)Fourth element in Form (end date)
+      // Fifth element in Form (img)
       row = document.createElement("div");
       row.className = 'row';
       data.appendChild(row);
@@ -397,32 +397,6 @@
       eDaleInput.name = 'eDate';
       eDaleInput.style = 'width:180px;';
       colEditText.appendChild(eDaleInput);
-      
-      // Fifth element in Form (img)Fourth element in Form (end date)
-      row = document.createElement("div");
-      row.className = 'row';
-      data.appendChild(row);
-
-      colLabel = document.createElement("div");
-      colLabel.className = 'col-label';
-      row.appendChild(colLabel);
-
-      colEditText = document.createElement("div");
-      colEditText.className = 'col-edit-text';
-      row.appendChild(colEditText);
-
-      const imgLabel = document.createElement("label");
-      imgLabel.for = 'img';
-      imgLabel.innerText = 'Select Image';
-      colLabel.appendChild(imgLabel);
-
-      const imgInput = document.createElement("input");
-      imgInput.type = 'file';
-      imgInput.id = 'img';
-      imgInput.name = 'img';
-      imgInput.accept = 'image/*';
-      colEditText.appendChild(imgInput);
-
 
       let btns = document.createElement('div');
       btns.className = 'row btns';
@@ -435,6 +409,7 @@
       edit.onclick = function() {reloadList()};
       btns.appendChild(edit);
     }
+
   </script>
 </body>
 
