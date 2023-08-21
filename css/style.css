@@ -141,6 +141,7 @@ body {
 }
 
 .save,
+.remove,
 .add {
     cursor: pointer;
     border: 0 none transparent;
@@ -149,9 +150,11 @@ body {
     width: 150px;
     color: #000;
     font-size: 15px;
+    margin-right: 1rem;
 }
 
 .save:hover,
+.remove:hover,
 .add:hover {
     background-color: #82b1f3;
 }
@@ -247,6 +250,7 @@ body {
     .col-edit-text,
     .cancel,
     .save,
+    .remove,
     .add {
         width: 100%;
         margin-top: 5px;

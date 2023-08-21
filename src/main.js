@@ -334,6 +334,13 @@ async function editFormFunction(placeKey) {
     btns.className = 'row btns';
     editMain.appendChild(btns);
 
+    const remove = document.createElement("input");
+    remove.type = 'submit';
+    remove.id = 'remove'
+    remove.className = 'remove';
+    remove.value = 'Delete';
+    btns.appendChild(remove);
+
     const save = document.createElement("input");
     save.type = 'submit';
     save.id = 'save'
@@ -352,7 +359,12 @@ async function editFormFunction(placeKey) {
     sDaleInput.value = placeData.sDate;
     eDaleInput.value = placeData.eDate;
 
-    document.getElementById('editMain').addEventListener('submit', submitForm);
+    save.addEventListener('click', function handleClick() {
+        document.getElementById('editMain').addEventListener('submit', submitForm);
+    });
+    remove.addEventListener('click', function handleClick() {
+        document.getElementById('editMain').addEventListener('submit', deleteData);
+    });
 
     async function submitForm(e) {
         e.preventDefault();
@@ -378,6 +390,22 @@ async function editFormFunction(placeKey) {
             }
         } catch (error) {
             console.error("Error updating data:", error);
+        }
+    }
+
+    async function deleteData(e) {
+        e.preventDefault();
+        try {
+            await placeRef.remove();
+
+            if (window.confirm("Data deleted successfully!")) {
+                // They clicked ok
+                reloadList();
+            } else {
+                // They clicked cancel, then still on the form page
+            }
+        } catch (error) {
+            console.error("Error deleting data:", error);
         }
     }
 }
