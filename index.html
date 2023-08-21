@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>First Task 1</title>
   <link rel="stylesheet" href="./css/style.css">
-  <script type="module" src="/dist/bundle.js"></script>
-  <script src="/src/main.js"></script>
 </head>
 
 <body>
@@ -34,97 +32,14 @@
 
     <div class="container">
       <div id="listContainer" class="places-container">
-        <div class="place" onclick="editFormFunction()">
-          <img src="./img/Santorini.jpg" alt="Santorini, Greece image">
-          <div class="info">
-            <h2>Santorini, Greece:</h2>
-            <p class="sDate">Start date: 20-8-2023</p>
-            <p class="eDate">End date: 30-8-2023</p>
-            <p>Santorini, known since ancient times as Thira, is one of the most famous islands in the world. The fact
-              that you can sit in front of the caldera, enjoy local dishes, a drink or a coffee while gazing at the
-              remarkable beauty of an active volcano is priceless!</p>
-          </div>
-        </div>
-        <div class="place" onclick="editFormFunction()">
-          <img src="./img/Grand Cayman.jpg" alt="Grand Cayman image">
-          <div class="info">
-            <h2>Grand Cayman:</h2>
-            <p class="sDate">Start date: 13-8-2023</p>
-            <p class="eDate">End date: 20-8-2023</p>
-            <p>One of the top things to do in Grand Cayman is swimming with sea creatures at Stingray City. This
-              shallow, sandy area, about 25 miles offshore, is filled with gentle Atlantic stingrays that you can touch
-              and even kiss.</p>
-          </div>
-        </div>
-        <div class="place" onclick="editFormFunction()">
-          <img src="./img/Costa Rica.jpg" alt="Costa Rica image">
-          <div class="info">
-            <h2>Costa Rica:</h2>
-            <p class="sDate">Start date: 28-9-2023</p>
-            <p class="eDate">End date: 05-10-2023</p>
-            <p>Craving a travel adventure focused on nature and wildlife? You can't go wrong with a trip to Costa Rica
-              in May. It's only the very beginning of the rainy season, so while you are likely to have some chance of
-              showers, you'll get much better prices for weather that's almost as nice as it is earlier in the year.</p>
-          </div>
-        </div>
-        <div class="place" onclick="editFormFunction()">
-          <img src="./img/New Orleans, Louisiana.jpg" alt="New Orleans, Louisiana image">
-          <div class="info">
-            <h2>New Orleans, Louisiana:</h2>
-            <p class="sDate">Start date: 17-8-2023</p>
-            <p class="eDate">End date: 3-9-2023</p>
-            <p>May is one of your last chances to visit the "Big Easy" before the city becomes infamously muggy for the
-              summer, and fortunately, it's also one of the cheapest times to visit New Orleans. Your best bet is to
-              plan your trip to New Orleans during the week, if you're looking to save some money. Expect warm days,
-              breezy nights, and plenty of Creole culture.</p>
-          </div>
-        </div>
-        <div class="place" onclick="editFormFunction()">
-          <img src="./img/Istanbul, Turkey.jpg" alt="Istanbul, Turkey image">
-          <div class="info">
-            <h2>Istanbul, Turkey:</h2>
-            <p class="sDate">Start date: 10-8-2023</p>
-            <p class="eDate">End date: 15-8-2023</p>
-            <p>Even on a short itinerary, tourists can experience many of Istanbul's top-rated tourist attractions in
-              May, as the entry lines should be relatively short. Visit the Aya Sofya, the 1,500-year-old
-              church-turned-mosque, arguably the most recognizable landmark in the city.</p>
-          </div>
-        </div>
-        <div class="place" onclick="editFormFunction()">
-          <img src="./img/Cancun, Mexico.jpg" alt="Cancun, Mexico image">
-          <div class="info">
-            <h2>Cancun, Mexico:</h2>
-            <p class="sDate">Start date: 1-9-2023</p>
-            <p class="eDate">End date: 25-9-2023</p>
-            <p>Aside from the occasional shower or two, Cancun has fantastic weather in May. The spring breakers have
-              returned home, and resorts are eager to fill their rooms, dropping their prices to ultra-low rates. It'll
-              be hot, but with Cancun's breezy, uncrowded coastline and breathtakingly clear sea, you won't sweat it.
-            </p>
-          </div>
-        </div>
-        <div class="place" onclick="editFormFunction()">
-          <img src="./img/The Outer Banks, North Carolina.jpg" alt="The Outer Banks, North Carolina image">
-          <div class="info">
-            <h2>The Outer Banks:</h2>
-            <p class="sDate">Start date: 1-10-2023</p>
-            <p class="eDate">End date: 10-10-2023</p>
-            <p>The Outer Banks is an idyllic chain of barrier islands stretching over 170 miles of the Atlantic Coast,
-              and it boasts a slew of fantastic things to do.</p>
-          </div>
-        </div>
-        <div class="place" onclick="editFormFunction()">
-          <img src="./img/Lisbon, Portugal.jpg" alt="Lisbon, Portugal image">
-          <div class="info">
-            <h2>Lisbon, Portugal:</h2>
-            <p class="sDate">Start date: 15-10-2023</p>
-            <p class="eDate">End date: 19-10-2023</p>
-            <p>Looking for a deal on Lisbon? Sneak in a vacation to this beloved European city in May, just before
-              prices jump in June, and you'll find that you can get great bang for your buck.</p>
-          </div>
-        </div>
       </div>
     </div>
   </section>
+
+  <!-- JavaScript section -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+  <script src="/src/main.js"></script>
+  <script type="module" src="/src/firebase.js"></script>
 </body>
 
 </html>

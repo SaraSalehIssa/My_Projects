@@ -1,9 +1,14 @@
 function formFunction() {
     document.getElementById("listTitle").innerHTML = "Create Event";
 
-    let main = document.createElement('div');
+    let main = document.createElement('form');
     main.className = 'main';
-    var oldElement = document.getElementById('listContainer');
+    main.id = 'main';
+    if (document.getElementById('listContainer') == null) {
+        var oldElement = document.getElementById('editMain');
+    } else {
+        var oldElement = document.getElementById('listContainer');
+    }
     oldElement.replaceWith(main);
 
     let data = document.createElement('div');
@@ -31,6 +36,7 @@ function formFunction() {
     const nameInput = document.createElement("input");
     nameInput.type = 'text';
     nameInput.name = 'areaname';
+    nameInput.id = 'areaname';
     nameInput.placeholder = 'Place name...';
     nameInput.style = 'width:180px;';
     colEditText.appendChild(nameInput);
@@ -57,7 +63,7 @@ function formFunction() {
     descriptionInput.id = 'description';
     descriptionInput.name = 'description';
     descriptionInput.placeholder = 'Write something...';
-    descriptionInput.style = 'height:150px; width:180px;';
+    descriptionInput.style = 'height:150px; width:180px; resize:none;';
     colEditText.appendChild(descriptionInput);
 
     // Third element in Form (start date)
@@ -109,7 +115,7 @@ function formFunction() {
     eDaleInput.name = 'eDate';
     eDaleInput.style = 'width:180px;';
     colEditText.appendChild(eDaleInput);
-    
+
     // Fifth element in Form (img)
     row = document.createElement("div");
     row.className = 'row';
@@ -124,51 +130,106 @@ function formFunction() {
     row.appendChild(colEditText);
 
     const imgLabel = document.createElement("label");
-    imgLabel.for = 'img';
+    imgLabel.for = 'imgPlace';
     imgLabel.innerText = 'Select Image';
     colLabel.appendChild(imgLabel);
 
     const imgInput = document.createElement("input");
-    imgInput.type = 'file';
-    imgInput.id = 'img';
-    imgInput.name = 'img';
-    imgInput.accept = 'image/*';
+    imgInput.type = 'text';
+    imgInput.id = 'imgPlace';
+    imgInput.name = 'imgPlace';
+    imgInput.placeholder = 'Enter URL img...';
+    imgInput.style = 'width:180px;';
     colEditText.appendChild(imgInput);
 
     let btns = document.createElement('div');
     btns.className = 'row btns';
+    btns.id = 'btns';
     main.appendChild(btns);
 
     const cancel = document.createElement("input");
     cancel.type = 'submit';
     cancel.className = 'cancel';
+    cancel.id = 'cancel';
     cancel.value = 'Cancel';
-    cancel.onclick = function() {reloadList()};
+
     btns.appendChild(cancel);
 
-    const saveadd = document.createElement("input");
-    saveadd.type = 'submit';
-    saveadd.className = 'saveadd';
-    saveadd.value = 'Save/Add';
-    saveadd.onclick = function() {reloadList()};
-    btns.appendChild(saveadd);
-  }
+    const add = document.createElement("input");
+    add.type = 'submit';
+    add.className = 'add';
+    add.id = 'add';
+    add.value = 'Add';
+    btns.appendChild(add);
 
-  function reloadList() {
-location.assign("index.html");
+    cancel.addEventListener('click', function () {
+        location.assign("index.html");
+    });
+    add.addEventListener('click', function handleClick() {
+        document.getElementById('main').addEventListener('submit', submitForm);
+    });
+
+    function submitForm(e) {
+        e.preventDefault();
+        let name = getElementVal('areaname');
+        let description = getElementVal('description');
+        let sDate = getElementVal('sDate');
+        let eDate = getElementVal('eDate');
+        let imgPlace = getElementVal('imgPlace');
+
+        addlocation(name, description, sDate, eDate, imgPlace);
+        console.log(name, description, sDate, eDate, imgPlace);
+    }
 }
 
-  function editFormFunction(){
+const addlocation = async (name, description, sDate, eDate, imgPlace) => {
+    const placesRef = firebase.database().ref('places');
+
+    if (name && description && sDate && eDate && imgPlace) {
+        try {
+            const newContentForm = placesRef.push();
+            await newContentForm.set({
+                name: name,
+                description: description,
+                sDate: sDate,
+                eDate: eDate,
+                imgPlace: imgPlace,
+            });
+
+            const newPlaceKey = newContentForm.key;
+
+            if (window.confirm("Thank you for submission!")) {
+                reloadList();
+            }
+            return newPlaceKey;
+        } catch (error) {
+            console.error("Error saving data:", error);
+        }
+    } else {
+        window.alert("Please fill out all fields!");
+    }
+};
+
+const getElementVal = (id) => {
+    return document.getElementById(id).value;
+}
+
+async function reloadList() {
+    location.assign("index.html");
+}
+
+async function editFormFunction(placeKey) {
     document.getElementById("listTitle").innerHTML = "Edit Event";
 
-    let main = document.createElement('div');
-    main.className = 'main';
+    let editMain = document.createElement('form');
+    editMain.className = 'editMain';
+    editMain.id = 'editMain';
     var oldElement = document.getElementById('listContainer');
-    oldElement.replaceWith(main);
+    oldElement.replaceWith(editMain);
 
     let data = document.createElement('div');
     data.className = 'data';
-    main.appendChild(data);
+    editMain.appendChild(data);
 
     // First element in Form (name)
     let row = document.createElement("div");
@@ -191,7 +252,7 @@ location.assign("index.html");
     const nameInput = document.createElement("input");
     nameInput.type = 'text';
     nameInput.name = 'areaname';
-    nameInput.placeholder = 'Place name...';
+    nameInput.id = 'areaname';
     nameInput.style = 'width:180px;';
     colEditText.appendChild(nameInput);
 
@@ -216,7 +277,6 @@ location.assign("index.html");
     const descriptionInput = document.createElement("textarea");
     descriptionInput.id = 'description';
     descriptionInput.name = 'description';
-    descriptionInput.placeholder = 'Write something...';
     descriptionInput.style = 'height:150px; width:180px;';
     colEditText.appendChild(descriptionInput);
 
@@ -272,12 +332,52 @@ location.assign("index.html");
 
     let btns = document.createElement('div');
     btns.className = 'row btns';
-    main.appendChild(btns);
+    editMain.appendChild(btns);
 
-    const edit = document.createElement("input");
-    edit.type = 'submit';
-    edit.className = 'edit';
-    edit.value = 'Edit Event';
-    edit.onclick = function() {reloadList()};
-    btns.appendChild(edit);
-  }
+    const save = document.createElement("input");
+    save.type = 'submit';
+    save.id = 'save'
+    save.className = 'save';
+    save.value = 'Save';
+    btns.appendChild(save);
+
+    const placeRef = firebase.database().ref(`places/${placeKey}`);
+
+    const snapshot = await placeRef.once('value');
+    const placeData = snapshot.val();
+
+    // Populate the edit form fields with the place's data
+    nameInput.value = placeData.name;
+    descriptionInput.value = placeData.description;
+    sDaleInput.value = placeData.sDate;
+    eDaleInput.value = placeData.eDate;
+
+    document.getElementById('editMain').addEventListener('submit', submitForm);
+
+    async function submitForm(e) {
+        e.preventDefault();
+        let name = getElementVal('areaname');
+        let description = getElementVal('description');
+        let sDate = getElementVal('sDate');
+        let eDate = getElementVal('eDate');
+
+        console.log(name, description, sDate, eDate);
+        try {
+            await placeRef.update({
+                name: name,
+                description: description,
+                sDate: sDate,
+                eDate: eDate
+            });
+
+            if (window.confirm("Data updated successfully!")) {
+                // They clicked ok
+                reloadList();
+            } else {
+                // They clicked cancel, then still on the form page
+            }
+        } catch (error) {
+            console.error("Error updating data:", error);
+        }
+    }
+}

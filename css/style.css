@@ -26,7 +26,7 @@ header {
     width: 100%;
 }
 
-header .row{
+header .row {
     width: 100%;
     justify-content: space-between;
     padding: 1rem;
@@ -120,7 +120,7 @@ body {
     height: 100vh;
 }
 
-.container .data .row{
+.container .data .row {
     padding-bottom: 2rem;
 }
 
@@ -140,7 +140,8 @@ body {
     font-size: 15px;
 }
 
-.saveadd, .edit {
+.save,
+.add {
     cursor: pointer;
     border: 0 none transparent;
     background-color: #3b8cfd;
@@ -150,7 +151,8 @@ body {
     font-size: 15px;
 }
 
-.saveadd:hover, .edit:hover {
+.save:hover,
+.add:hover {
     background-color: #82b1f3;
 }
 
@@ -187,6 +189,7 @@ body {
     width: 95%;
     transform: translate(-50%, -50%);
 }
+
 .place:hover .info {
     visibility: visible;
     position: absolute;
@@ -196,16 +199,20 @@ body {
     transform: translate(-50%, -50%);
     transition-timing-function: ease-in-out;
 }
-.place .info h2{
+
+.place .info h2 {
     font-size: 2rem;
     margin: 0;
     width: 100%;
 }
-.place .info p{
+
+.place .info p {
     font-size: 1.1rem;
     margin: 0.5rem 0 0 0;
 }
-.place .info p.sDate, .place .info p.eDate{
+
+.place .info p.sDate,
+.place .info p.eDate {
     font-size: 1.5rem;
 }
 
@@ -235,24 +242,28 @@ body {
 }
 
 @media screen and (max-width: 350px) {
+
     .col-label,
     .col-edit-text,
     .cancel,
-    .saveadd,
-    .edit {
+    .save,
+    .add {
         width: 100%;
         margin-top: 5px;
     }
 }
 
 @media screen and (max-width: 450px) {
-    .place .info h2{
+    .place .info h2 {
         font-size: 1.5rem;
     }
-    .place .info p{
+
+    .place .info p {
         font-size: 0.8rem;
     }
-    .place .info p.sDate, .place .info p.eDate{
+
+    .place .info p.sDate,
+    .place .info p.eDate {
         font-size: 1rem;
     }
 }
