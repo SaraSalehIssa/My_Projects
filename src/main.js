@@ -1,15 +1,16 @@
 function formFunction() {
     document.getElementById("listTitle").innerHTML = "Create Event";
 
-    let main = document.createElement('form');
+    const main = document.createElement('form');
     main.className = 'main';
     main.id = 'main';
     if (document.getElementById('listContainer') == null) {
-        var oldElement = document.getElementById('editMain');
+        let oldElement = document.getElementById('editMain');
+        oldElement.replaceWith(main);
     } else {
-        var oldElement = document.getElementById('listContainer');
+        let oldElement = document.getElementById('listContainer');
+        oldElement.replaceWith(main);
     }
-    oldElement.replaceWith(main);
 
     let data = document.createElement('div');
     data.className = 'data';
@@ -221,10 +222,10 @@ async function reloadList() {
 async function editFormFunction(placeKey) {
     document.getElementById("listTitle").innerHTML = "Edit Event";
 
-    let editMain = document.createElement('form');
+    const editMain = document.createElement('form');
     editMain.className = 'editMain';
     editMain.id = 'editMain';
-    var oldElement = document.getElementById('listContainer');
+    let oldElement = document.getElementById('listContainer');
     oldElement.replaceWith(editMain);
 
     let data = document.createElement('div');

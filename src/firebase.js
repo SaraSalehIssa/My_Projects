@@ -22,17 +22,19 @@ async function DataForContainer() {
   const placesData = snapshot.val();
 
   // To create HTML elements
-  for (const placeKey in placesData) {
-    const place = placesData[placeKey];
-
+  Object.keys(placesData).map((key) => {
+    const infor = placesData[key];
     const placeDiv = document.createElement('div');
     placeDiv.className = 'place';
     placeDiv.onclick = function () {
-      editFormFunction(placeKey);
+      editFormFunction(key);
     };
 
+    // To hidden the loading div
+    document.getElementById("loadingPara").style.display = "none";
+
     const img = document.createElement('img');
-    img.src = place.imgPlace;
+    img.src = infor.imgPlace;
     img.id = 'imgPlace';
     img.alt = 'Place image!';
     placeDiv.appendChild(img);
@@ -61,7 +63,7 @@ async function DataForContainer() {
     data.appendChild(description);
 
     placeDiv.onmouseover = async function () {
-      const placeRef = firebase.database().ref(`places/${placeKey}`);
+      const placeRef = firebase.database().ref(`places/${key}`);
 
       const snapshot = await placeRef.once('value');
       const placeData = snapshot.val();
@@ -72,7 +74,19 @@ async function DataForContainer() {
     };
 
     placesContainer.appendChild(placeDiv);
-  }
+  });
+  console.log(Object.values(placesData));
 }
 
+function loadingIcon(){
+  const loading = document.getElementById('listContainer');
+
+  const loadingPara = document.createElement('img');
+  loadingPara.id = 'loadingPara';
+  loadingPara.className = 'loadingPara';
+  loadingPara.src = './loading.png';
+  loading.appendChild(loadingPara);
+}
+
+loadingIcon();
 DataForContainer();

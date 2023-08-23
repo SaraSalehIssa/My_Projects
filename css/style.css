@@ -8,13 +8,14 @@
     align-items: stretch;
 }
 
-body {
+.bodyClass {
     margin: 0;
     background-color: #fcfcfc;
+    height: 100vh;
 }
 
 /* header style */
-header {
+.headerClass {
     display: flex;
     align-items: center;
     height: 100px;
@@ -26,7 +27,7 @@ header {
     width: 100%;
 }
 
-header .row {
+.headerClass .row {
     width: 100%;
     justify-content: space-between;
     padding: 1rem;
@@ -40,16 +41,17 @@ header .row {
     font-size: 1rem;
     border: none;
     display: inline-block;
+    cursor: pointer;
 }
 
-h1 {
+.firstTitle {
     display: inline-block;
     margin: 0;
     font-size: 2rem;
 }
 
 /* navbar style */
-nav {
+.navForList {
     text-align: center;
     font-size: 25px;
     float: left;
@@ -59,37 +61,37 @@ nav {
     border: 1px solid #000;
 }
 
-nav ul {
+.navForList ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-nav ul li a {
+.navForList ul li a {
     text-transform: capitalize;
     text-decoration-line: none;
 }
 
 /* unvisited link */
-nav ul li .list a:link,
-nav ul li .form a:link {
+.navForList ul li .list a:link,
+.navForList ul li .form a:link {
     color: #000;
 }
 
 /* visited link */
-nav ul li .list a:visited,
-nav ul li .form a:visited {
+.navForList ul li .list a:visited,
+.navForList ul li .form a:visited {
     color: #3b8cfd;
 }
 
 /* mouse over link */
-nav ul li .list a:hover,
-nav ul li .form a:hover {
+.navForList ul li .list a:hover,
+.navForList ul li .form a:hover {
     color: #82b1f3;
 }
 
-nav ul li .form,
-nav ul li .list {
+.navForList ul li .form,
+.navForList ul li .list {
     padding: 20px 0px;
     border-bottom: 1px solid #000;
 }
@@ -114,10 +116,6 @@ nav ul li .list {
     float: left;
     width: 75%;
     margin-top: 6px;
-}
-
-body {
-    height: 100vh;
 }
 
 .container .data .row {
@@ -217,6 +215,15 @@ body {
 .place .info p.sDate,
 .place .info p.eDate {
     font-size: 1.5rem;
+}
+
+.loadingPara{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 
 /* Responsive layout */
