@@ -217,13 +217,12 @@
     font-size: 1.5rem;
 }
 
-.loadingPara{
-    display: block;
+.loadingPara {
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    width: 40%;
+    padding-top: 9rem;
+    padding-bottom: 9rem;
 }
 
 /* Responsive layout */

@@ -78,7 +78,7 @@ async function DataForContainer() {
   console.log(Object.values(placesData));
 }
 
-function loadingIcon(){
+function loadingIcon() {
   const loading = document.getElementById('listContainer');
 
   const loadingPara = document.createElement('img');

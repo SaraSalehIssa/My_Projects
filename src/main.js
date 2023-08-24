@@ -4,40 +4,199 @@ function formFunction() {
     const main = document.createElement('form');
     main.className = 'main';
     main.id = 'main';
+    let oldElement;
     if (document.getElementById('listContainer') == null) {
-        let oldElement = document.getElementById('editMain');
-        oldElement.replaceWith(main);
+        oldElement = document.getElementById('editMain');
     } else {
-        let oldElement = document.getElementById('listContainer');
-        oldElement.replaceWith(main);
+        oldElement = document.getElementById('listContainer');
+    }
+    oldElement.replaceWith(main);
+
+    const data = createDiv();
+    const row = createDiv();
+    const colLabel = createDiv();
+    const colEditText = createDiv();
+    const nameLabel = createLabel();
+    const nameInput = createInput();
+    const descriptionLabel = createLabel();
+    const descriptionInput = createTextArea();
+    const sDaleLabel = createLabel();
+    const sDaleInput = createInput();
+    const eDateLabel = createLabel();
+    const eDateInput = createInput();
+    const imgLabel = createLabel();
+    const imgInput = createInput();
+    const btns = createDiv();
+    const cancel = createInput();
+    const add = createInput();
+
+    createForm(main, data, row, colLabel, colEditText, nameLabel, nameInput, descriptionLabel, descriptionInput, sDaleLabel, sDaleInput, eDateLabel, eDateInput, imgLabel, imgInput, btns, cancel, add);
+
+    cancel.addEventListener('click', function () {
+        location.assign("index.html");
+    });
+    add.addEventListener('click', function handleClick() {
+        document.getElementById('main').addEventListener('submit', submitForm);
+    });
+
+    function submitForm(e) {
+        e.preventDefault();
+        const name = getElementVal('areaname');
+        const description = getElementVal('description');
+        const sDate = getElementVal('sDate');
+        const eDate = getElementVal('eDate');
+        const imgPlace = getElementVal('imgPlace');
+
+        addlocation(name, description, sDate, eDate, imgPlace);
+    }
+}
+
+const addlocation = async (name, description, sDate, eDate, imgPlace) => {
+    const placesRef = firebase.database().ref('places');
+
+    try {
+        const newContentForm = placesRef.push();
+        await newContentForm.set({
+            name: name,
+            description: description,
+            sDate: sDate,
+            eDate: eDate,
+            imgPlace: imgPlace,
+        });
+
+        const newPlaceKey = newContentForm.key;
+        reloadList();
+        return newPlaceKey;
+    } catch (error) {
+        console.error("Error saving data:", error);
+    }
+};
+
+const getElementVal = (id) => {
+    return document.getElementById(id).value;
+}
+
+const createDiv = () => {
+    return document.createElement('div');
+}
+
+const createInput = () => {
+    return document.createElement('input');
+}
+
+const createLabel = () => {
+    return document.createElement('label');
+}
+
+const createTextArea = () => {
+    return document.createElement('textarea');
+}
+
+async function reloadList() {
+    location.assign("index.html");
+}
+
+async function editFormFunction(placeKey) {
+    document.getElementById("listTitle").innerHTML = "Edit Event";
+
+    const editMain = document.createElement('form');
+    editMain.className = 'editMain';
+    editMain.id = 'editMain';
+    let oldElement = document.getElementById('listContainer');
+    oldElement.replaceWith(editMain);
+
+    const data = createDiv();
+    const row = createDiv();
+    const colLabel = createDiv();
+    const colEditText = createDiv();
+    const nameLabel = createLabel();
+    const nameInput = createInput();
+    const descriptionLabel = createLabel();
+    const descriptionInput = createTextArea();
+    const sDaleLabel = createLabel();
+    const sDaleInput = createInput();
+    const eDateLabel = createLabel();
+    const eDateInput = createInput();
+    const imgLabel = createLabel();
+    const imgInput = createInput();
+    const btns = createDiv();
+    const remove = createInput();
+    const save = createInput();
+
+    createForm(editMain, data, row, colLabel, colEditText, nameLabel, nameInput, descriptionLabel, descriptionInput, sDaleLabel, sDaleInput, eDateLabel, eDateInput, imgLabel, imgInput, btns, remove, save);
+    imgLabel.style.display = 'none';
+    imgInput.type = "hidden";
+
+    const placeRef = firebase.database().ref(`places/${placeKey}`);
+
+    const snapshot = await placeRef.once('value');
+    const placeData = snapshot.val();
+
+    // Populate the edit form fields with the place's data
+    nameInput.value = placeData.name;
+    descriptionInput.value = placeData.description;
+    sDaleInput.value = placeData.sDate;
+    eDateInput.value = placeData.eDate;
+
+    save.addEventListener('click', function handleClick() {
+        document.getElementById('editMain').addEventListener('submit', submitForm);
+    });
+    remove.addEventListener('click', function handleClick() {
+        document.getElementById('editMain').addEventListener('submit', deleteData);
+    });
+
+    async function submitForm(e) {
+        e.preventDefault();
+        let name = getElementVal('areaname');
+        let description = getElementVal('description');
+        let sDate = getElementVal('sDate');
+        let eDate = getElementVal('eDate');
+        try {
+            await placeRef.update({
+                name: name,
+                description: description,
+                sDate: sDate,
+                eDate: eDate
+            });
+            reloadList();
+        } catch (error) {
+            console.error("Error updating data:", error);
+        }
     }
 
-    let data = document.createElement('div');
+    async function deleteData(e) {
+        e.preventDefault();
+        try {
+            await placeRef.remove();
+            reloadList();
+        } catch (error) {
+            console.error("Error deleting data:", error);
+        }
+    }
+}
+
+function createForm(main, data, row, colLabel, colEditText, nameLabel, nameInput, descriptionLabel, descriptionInput, sDaleLabel, sDaleInput, eDateLabel, eDateInput, imgLabel, imgInput, btns, btn1, btn2) {
     data.className = 'data';
     main.appendChild(data);
 
     // First element in Form (name)
-    let row = document.createElement("div");
     row.className = 'row';
     data.appendChild(row);
 
-    let colLabel = document.createElement("div");
     colLabel.className = 'col-label';
     row.appendChild(colLabel);
 
-    let colEditText = document.createElement("div");
     colEditText.className = 'col-edit-text';
     row.appendChild(colEditText);
 
-    const nameLabel = document.createElement("label");
     nameLabel.for = 'name';
     nameLabel.innerText = 'Name';
     colLabel.appendChild(nameLabel);
 
-    const nameInput = document.createElement("input");
     nameInput.type = 'text';
     nameInput.name = 'areaname';
     nameInput.id = 'areaname';
+    nameInput.setAttribute("required", "");
     nameInput.placeholder = 'Place name...';
     nameInput.style = 'width:180px;';
     colEditText.appendChild(nameInput);
@@ -55,14 +214,13 @@ function formFunction() {
     colEditText.className = 'col-edit-text';
     row.appendChild(colEditText);
 
-    const descriptionLabel = document.createElement("label");
     descriptionLabel.for = 'description';
     descriptionLabel.innerText = 'Description';
     colLabel.appendChild(descriptionLabel);
 
-    const descriptionInput = document.createElement("textarea");
     descriptionInput.id = 'description';
     descriptionInput.name = 'description';
+    descriptionInput.setAttribute("required", "");
     descriptionInput.placeholder = 'Write something...';
     descriptionInput.style = 'height:150px; width:180px; resize:none;';
     colEditText.appendChild(descriptionInput);
@@ -80,15 +238,14 @@ function formFunction() {
     colEditText.className = 'col-edit-text';
     row.appendChild(colEditText);
 
-    const sDaleLabel = document.createElement("label");
     sDaleLabel.for = 'sDate';
     sDaleLabel.innerText = 'Start Date';
     colLabel.appendChild(sDaleLabel);
 
-    const sDaleInput = document.createElement("input");
     sDaleInput.type = 'date';
     sDaleInput.id = 'sDate';
     sDaleInput.name = 'sDate';
+    sDaleInput.setAttribute("required", "");
     sDaleInput.style = 'width:180px;';
     colEditText.appendChild(sDaleInput);
 
@@ -105,17 +262,16 @@ function formFunction() {
     colEditText.className = 'col-edit-text';
     row.appendChild(colEditText);
 
-    const eDaleLabel = document.createElement("label");
-    eDaleLabel.for = 'eDate';
-    eDaleLabel.innerText = 'End Date';
-    colLabel.appendChild(eDaleLabel);
+    eDateLabel.for = 'eDate';
+    eDateLabel.innerText = 'End Date';
+    colLabel.appendChild(eDateLabel);
 
-    const eDaleInput = document.createElement("input");
-    eDaleInput.type = 'date';
-    eDaleInput.id = 'eDate';
-    eDaleInput.name = 'eDate';
-    eDaleInput.style = 'width:180px;';
-    colEditText.appendChild(eDaleInput);
+    eDateInput.type = 'date';
+    eDateInput.id = 'eDate';
+    eDateInput.name = 'eDate';
+    eDateInput.setAttribute("required", "");
+    eDateInput.style = 'width:180px;';
+    colEditText.appendChild(eDateInput);
 
     // Fifth element in Form (img)
     row = document.createElement("div");
@@ -130,283 +286,45 @@ function formFunction() {
     colEditText.className = 'col-edit-text';
     row.appendChild(colEditText);
 
-    const imgLabel = document.createElement("label");
     imgLabel.for = 'imgPlace';
     imgLabel.innerText = 'Select Image';
     colLabel.appendChild(imgLabel);
 
-    const imgInput = document.createElement("input");
     imgInput.type = 'text';
     imgInput.id = 'imgPlace';
     imgInput.name = 'imgPlace';
+    imgInput.setAttribute("required", "");
     imgInput.placeholder = 'Enter URL img...';
     imgInput.style = 'width:180px;';
     colEditText.appendChild(imgInput);
 
-    let btns = document.createElement('div');
     btns.className = 'row btns';
     btns.id = 'btns';
     main.appendChild(btns);
 
-    const cancel = document.createElement("input");
-    cancel.type = 'submit';
-    cancel.className = 'cancel';
-    cancel.id = 'cancel';
-    cancel.value = 'Cancel';
+    btn1.type = 'submit';
+    if (main.className != 'main') {
+        btn1.className = 'remove';
+        btn1.id = 'remove';
+        btn1.value = 'Delete';
 
-    btns.appendChild(cancel);
-
-    const add = document.createElement("input");
-    add.type = 'submit';
-    add.className = 'add';
-    add.id = 'add';
-    add.value = 'Add';
-    btns.appendChild(add);
-
-    cancel.addEventListener('click', function () {
-        location.assign("index.html");
-    });
-    add.addEventListener('click', function handleClick() {
-        document.getElementById('main').addEventListener('submit', submitForm);
-    });
-
-    function submitForm(e) {
-        e.preventDefault();
-        let name = getElementVal('areaname');
-        let description = getElementVal('description');
-        let sDate = getElementVal('sDate');
-        let eDate = getElementVal('eDate');
-        let imgPlace = getElementVal('imgPlace');
-
-        addlocation(name, description, sDate, eDate, imgPlace);
-        console.log(name, description, sDate, eDate, imgPlace);
-    }
-}
-
-const addlocation = async (name, description, sDate, eDate, imgPlace) => {
-    const placesRef = firebase.database().ref('places');
-
-    if (name && description && sDate && eDate && imgPlace) {
-        try {
-            const newContentForm = placesRef.push();
-            await newContentForm.set({
-                name: name,
-                description: description,
-                sDate: sDate,
-                eDate: eDate,
-                imgPlace: imgPlace,
-            });
-
-            const newPlaceKey = newContentForm.key;
-
-            if (window.confirm("Thank you for submission!")) {
-                reloadList();
-            }
-            return newPlaceKey;
-        } catch (error) {
-            console.error("Error saving data:", error);
-        }
     } else {
-        window.alert("Please fill out all fields!");
+        btn1.className = 'cancel';
+        btn1.id = 'cancel';
+        btn1.value = 'Cancel';
     }
-};
+    btns.appendChild(btn1);
 
-const getElementVal = (id) => {
-    return document.getElementById(id).value;
-}
+    btn2.type = 'submit';
+    if (main.className != 'main') {
+        btn2.className = 'save';
+        btn2.id = 'save';
+        btn2.value = 'Save';
 
-async function reloadList() {
-    location.assign("index.html");
-}
-
-async function editFormFunction(placeKey) {
-    document.getElementById("listTitle").innerHTML = "Edit Event";
-
-    const editMain = document.createElement('form');
-    editMain.className = 'editMain';
-    editMain.id = 'editMain';
-    let oldElement = document.getElementById('listContainer');
-    oldElement.replaceWith(editMain);
-
-    let data = document.createElement('div');
-    data.className = 'data';
-    editMain.appendChild(data);
-
-    // First element in Form (name)
-    let row = document.createElement("div");
-    row.className = 'row';
-    data.appendChild(row);
-
-    let colLabel = document.createElement("div");
-    colLabel.className = 'col-label';
-    row.appendChild(colLabel);
-
-    let colEditText = document.createElement("div");
-    colEditText.className = 'col-edit-text';
-    row.appendChild(colEditText);
-
-    const nameLabel = document.createElement("label");
-    nameLabel.for = 'name';
-    nameLabel.innerText = 'Name';
-    colLabel.appendChild(nameLabel);
-
-    const nameInput = document.createElement("input");
-    nameInput.type = 'text';
-    nameInput.name = 'areaname';
-    nameInput.id = 'areaname';
-    nameInput.style = 'width:180px;';
-    colEditText.appendChild(nameInput);
-
-    // Second element in Form (description)
-    row = document.createElement("div");
-    row.className = 'row';
-    data.appendChild(row);
-
-    colLabel = document.createElement("div");
-    colLabel.className = 'col-label';
-    row.appendChild(colLabel);
-
-    colEditText = document.createElement("div");
-    colEditText.className = 'col-edit-text';
-    row.appendChild(colEditText);
-
-    const descriptionLabel = document.createElement("label");
-    descriptionLabel.for = 'description';
-    descriptionLabel.innerText = 'Description';
-    colLabel.appendChild(descriptionLabel);
-
-    const descriptionInput = document.createElement("textarea");
-    descriptionInput.id = 'description';
-    descriptionInput.name = 'description';
-    descriptionInput.style = 'height:150px; width:180px;';
-    colEditText.appendChild(descriptionInput);
-
-    // Third element in Form (start date)
-    row = document.createElement("div");
-    row.className = 'row';
-    data.appendChild(row);
-
-    colLabel = document.createElement("div");
-    colLabel.className = 'col-label';
-    row.appendChild(colLabel);
-
-    colEditText = document.createElement("div");
-    colEditText.className = 'col-edit-text';
-    row.appendChild(colEditText);
-
-    const sDaleLabel = document.createElement("label");
-    sDaleLabel.for = 'sDate';
-    sDaleLabel.innerText = 'Start Date';
-    colLabel.appendChild(sDaleLabel);
-
-    const sDaleInput = document.createElement("input");
-    sDaleInput.type = 'date';
-    sDaleInput.id = 'sDate';
-    sDaleInput.name = 'sDate';
-    sDaleInput.style = 'width:180px;';
-    colEditText.appendChild(sDaleInput);
-
-    // Fourth element in Form (end date)
-    row = document.createElement("div");
-    row.className = 'row';
-    data.appendChild(row);
-
-    colLabel = document.createElement("div");
-    colLabel.className = 'col-label';
-    row.appendChild(colLabel);
-
-    colEditText = document.createElement("div");
-    colEditText.className = 'col-edit-text';
-    row.appendChild(colEditText);
-
-    const eDaleLabel = document.createElement("label");
-    eDaleLabel.for = 'eDate';
-    eDaleLabel.innerText = 'End Date';
-    colLabel.appendChild(eDaleLabel);
-
-    const eDaleInput = document.createElement("input");
-    eDaleInput.type = 'date';
-    eDaleInput.id = 'eDate';
-    eDaleInput.name = 'eDate';
-    eDaleInput.style = 'width:180px;';
-    colEditText.appendChild(eDaleInput);
-
-    let btns = document.createElement('div');
-    btns.className = 'row btns';
-    editMain.appendChild(btns);
-
-    const remove = document.createElement("input");
-    remove.type = 'submit';
-    remove.id = 'remove'
-    remove.className = 'remove';
-    remove.value = 'Delete';
-    btns.appendChild(remove);
-
-    const save = document.createElement("input");
-    save.type = 'submit';
-    save.id = 'save'
-    save.className = 'save';
-    save.value = 'Save';
-    btns.appendChild(save);
-
-    const placeRef = firebase.database().ref(`places/${placeKey}`);
-
-    const snapshot = await placeRef.once('value');
-    const placeData = snapshot.val();
-
-    // Populate the edit form fields with the place's data
-    nameInput.value = placeData.name;
-    descriptionInput.value = placeData.description;
-    sDaleInput.value = placeData.sDate;
-    eDaleInput.value = placeData.eDate;
-
-    save.addEventListener('click', function handleClick() {
-        document.getElementById('editMain').addEventListener('submit', submitForm);
-    });
-    remove.addEventListener('click', function handleClick() {
-        document.getElementById('editMain').addEventListener('submit', deleteData);
-    });
-
-    async function submitForm(e) {
-        e.preventDefault();
-        let name = getElementVal('areaname');
-        let description = getElementVal('description');
-        let sDate = getElementVal('sDate');
-        let eDate = getElementVal('eDate');
-
-        console.log(name, description, sDate, eDate);
-        try {
-            await placeRef.update({
-                name: name,
-                description: description,
-                sDate: sDate,
-                eDate: eDate
-            });
-
-            if (window.confirm("Data updated successfully!")) {
-                // They clicked ok
-                reloadList();
-            } else {
-                // They clicked cancel, then still on the form page
-            }
-        } catch (error) {
-            console.error("Error updating data:", error);
-        }
+    } else {
+        btn2.className = 'add';
+        btn2.id = 'add';
+        btn2.value = 'Add';
     }
-
-    async function deleteData(e) {
-        e.preventDefault();
-        try {
-            await placeRef.remove();
-
-            if (window.confirm("Data deleted successfully!")) {
-                // They clicked ok
-                reloadList();
-            } else {
-                // They clicked cancel, then still on the form page
-            }
-        } catch (error) {
-            console.error("Error deleting data:", error);
-        }
-    }
+    btns.appendChild(btn2);
 }
