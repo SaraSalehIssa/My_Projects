@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Task</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script type="module" src="/dist/bundle.js"></script>
+</head>
+
+<body class="FormBody">
+    <!-- header section -->
+    <header>
+        <div class="row">
+            <h1>Create/Edit Event</h1>
+            <button class="newButton" type="button">+New</button>
+        </div>
+    </header>
+
+    <!-- navbar section -->
+    <section class="row">
+        <nav class="navForForm">
+            <ul>
+                <li>
+                    <div class="list"><a href="index.html">List</a></div>
+                </li>
+                <li>
+                    <div class="form"><a href="#">Form</a></div>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="container">
+            <div class="data">
+                <div class="row">
+                    <div class="col-label">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="col-edit-text">
+                        <input type="text" id="name" name="areaname" placeholder="Place name..." style="width:180px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-label">
+                        <label for="description">Description</label>
+                    </div>
+                    <div class="col-edit-text">
+                        <textarea id="description" name="description" placeholder="Write something..."
+                            style="height:150px; width:180px;"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-label">
+                        <label for="sDate">Start Date</label>
+                    </div>
+                    <div class="col-edit-text">
+                        <input type="date" id="sDate" name="sDate" style="width:180px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-label">
+                        <label for="eDate">End Date</label>
+                    </div>
+                    <div class="col-edit-text">
+                        <input type="date" id="eDate" name="eDate" style="width:180px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-label">
+                        <label for="img">Select Image</label>
+                    </div>
+                    <div class="col-edit-text">
+                        <input type="file" id="img" name="img" accept="image/*">
+                    </div>
+                </div>
+            </div>
+            <div class="row btns">
+                <input class="cancel" type="submit" value="Cancel">
+                <input class="saveadd" type="submit" value="Save/Add">
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
